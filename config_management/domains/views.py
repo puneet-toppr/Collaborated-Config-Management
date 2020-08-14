@@ -1,70 +1,69 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.views.generic import View, TemplateView
-from .models import DomainName
-# from .forms import AddDomainForm
+from django.views.generic import View
+from .models import Domain
 from django.http.response import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Create your views here.
+class DomainView(View):
 
-def list_all_domains(request):
-    if request.method == 'GET':
+    def get(self, request, d_id):
 
-        temp = DomainName.objects.all()
-        domain_list = []
-        for i in temp:
-            domain_list.append((i.name, i.id))
+        if d_id == 'all':
+            all_domains = Domain.objects.all()
 
-        args = {'listing all domains':'ok', 'status_code':200, 'list of all domains':domain_list}
-        return JsonResponse(args)
-        # return HttpResponse('OK 200')
-    else:
-        return JsonResponse({'error':'method not supported'})
+            domain_info = []
+            domain_names = []
+            domain_ids = []
 
-def list_one_domain(request, search_d_id):
-    if request.method == 'GET':
+            for i in all_domains:
+                domain_info.append((i.get_info()['id'], i.get_info()['name']))
+                domain_names.append(i.get_info()['name'])
+                domain_ids.append(i.get_info()['id'])
 
-        try:
-            temp = DomainName.objects.get(id=search_d_id)
-        except:
-            return JsonResponse({'domain does not exist':'sorry boi, the requested domain does not exist'})
+            args = {'domain_info':domain_info, 'domain_names':domain_names, 'domain_ids':domain_ids}
 
-        args = {'listing one domains': 'ok', 'domain_name': temp.name, 'domain_id': temp.id}
-        return JsonResponse(args)
-    return JsonResponse({'error':'method not supported'})
+            return JsonResponse(args)
 
-@csrf_exempt
-def add_domain(request):
-    if request.method == 'POST':
+        else:
+
+            try:
+                domain_object = Domain.objects.get(id=d_id)
+            except:
+                return JsonResponse({'error_message':'The requested domain does not exist'})
+                
+            domain_name = domain_object.get_info()['name']
+            domain_id = domain_object.get_info()['id']
+
+            args = {'domain_name':domain_name, 'domain_id':domain_id}
+
+            return JsonResponse(args)
+
+
+    def post(self, request):
+            
         json_data = json.loads(str(request.body, encoding='utf-8'))
-        new_domain_name = (json_data['name'])
-        DomainName.objects.create(name=new_domain_name)
-        added_domain_id = DomainName.objects.get(name=new_domain_name).id
+        
+        domain_name = (json_data['name'])
+        Domain.objects.create(name=domain_name)
+        domain_id = Domain.objects.get(name=domain_name).get_info()['id']
 
-        args = {'create domain': 'ok', 'created domain name':new_domain_name, 'added_domain_id':added_domain_id}
+        args = {'domain_name':domain_name, 'domain_id':domain_id}
         return JsonResponse(args)
 
-    return JsonResponse({'error':'method not supported'})
 
-# def update_domain(request, search_d_id):
-#     if request.method == 'PUT':
-#         args = {'update domain': 'ok'}
-#         return args
-#
-#     return JsonResponse({'error':'method not supported'})
-
-@csrf_exempt
-def delete_domain(request, search_d_id):
-    if request.method == 'DELETE':
+    def delete(self, request, d_id):
+        
         try:
-            temp = DomainName.objects.get(id=search_d_id)
-            deleted_domain_name = temp.name
-            deleted_domain_id = temp.id
-        except:
-            return JsonResponse({'domain does not exist': 'sorry boi, the requested domain does not exist'})
-        temp.delete()
-        args = {'delete domain': 'ok', 'deleted_domain_name':deleted_domain_name, 'deleted_domain_id':deleted_domain_id}
-        return JsonResponse(args)
+            domain_object = Domain.objects.get(id=d_id)
 
-    return JsonResponse({'error':'method not supported'})
+            name = domain_object.name
+
+            domain_name = domain_object.get_info()['name']
+            domain_id = domain_object.get_info()['id']
+        except:
+            return JsonResponse({'error_message': 'The requested domain does not exist'})
+
+        domain_object.delete()
+        args = {'domain_name':domain_name, 'domain_id':domain_id}
+
+        return JsonResponse(args)
