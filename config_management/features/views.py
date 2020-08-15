@@ -6,24 +6,60 @@ from django.views.generic import View
 import json
 from django.views.generic.base import TemplateView
 
+from django.core import serializers
+from django.core.serializers.json import Serializer
+
+# class ValidateFormSerializer(serializers.json.Serializer):
+#     name = Serializers.CharField(required=True, max_length=128)
+
 class FeaturesClass(View):
 
     def get(self, request):
-        temp = Features.objects.all()
+        feature_queryset = Features.objects.all()
         feature_list = []
-        for i in temp:
-            feature_list.append((i.getinfo()['name'], i.getinfo()['id']))
+        for feature in feature_queryset.iterator():
+            feature_list.append((feature.name, feature.id))
 
-        args = { 'status_code':200, 'list of all features':feature_list}
+        args = { 'status_code':200, 'feature_list':feature_list}
         return JsonResponse(args)
     
     def post(self, request):
-        json_data = json.loads(str(request.body, encoding='utf-8'))
-        feature_name = (json_data['name'])
-        Features.objects.create(name=feature_name)
-        feature_id = Features.objects.get(name=feature_name).id
 
-        args = { 'status_code':200,'feature name':feature_name, 'feature_id':feature_id}
+        try: 
+            json_data = json.loads(str(request.body, encoding='utf-8'))
+        except:
+            return JsonResponse({'status_code':''})
+
+        # valid_ser = ValidateFormSerializer(data=request.data)
+        # if valid_ser.is_valid():
+        #     return JsonResponse({'status_code':''})
+
+        feature_name = (json_data['name'])
+        feature_object = Features.objects.create(name=feature_name)
+        args = { 'status_code':200,'feature_info':feature_object.getinfo()}
+
         return JsonResponse(args)
         
+class FeaturesClassSecond(View):
 
+    def get(self, request,feature_id):
+        feature_object = Features.objects.filter(id=feature_id).exists()
+        if not feature_object:
+               return JsonResponse({'error_message':'The requested feature does not exist'})
+        
+        feature_object = Features.objects.get(id=feature_id)
+        args = {'status_code':200,'feature_info':feature_object.getinfo()} 
+
+        return JsonResponse(args)
+    
+        
+    def delete(self, request,feature_id ):
+        feature_object = Features.objects.filter(id=feature_id).exists()
+        if not feature_object:
+               return JsonResponse({'error_message':'The requested feature does not exist'})
+
+        Features.objects.filter(id=feature_id).delete()
+        args = {'status_code':200,'feature_id':feature_id}
+
+        return JsonResponse(args)
+        
