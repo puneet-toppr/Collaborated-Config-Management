@@ -86,7 +86,7 @@ class AllDomains extends Component {
           <Navbar/>
           <br></br><br></br><br></br>
           <h1>All Domains</h1>
-          <button className='btn'><Link className='btn btn-primary' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+          <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
           <hr></hr>
           No Domains available, create a new one!
           
@@ -115,7 +115,7 @@ class AllDomains extends Component {
       <Navbar/>
       <br></br><br></br><br></br>
       <h1>All Domains</h1>
-      <button className='btn'><Link className='btn btn-primary' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+      <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
       <hr></hr>
           {domain_list}
       </div>

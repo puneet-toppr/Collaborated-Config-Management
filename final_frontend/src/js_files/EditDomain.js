@@ -207,7 +207,7 @@ class EditDomain extends Component {
 				        {feature_list}
 				           
 				        <button className='btn btn-primary'>Save</button>
-                <button className='btn'><Link className='btn btn-secondary' to={{pathname:'/domain', state:{fromDashboard:false}}}>Cancel</Link></button>
+                <button className='btn'><Link className='btn btn-secondary' to={{pathname:`/domain/${domain_info.id}`, state:{fromDashboard:false}}}>Cancel</Link></button>
 				    </form>
                   }
                   </div> : <h2><br></br><br></br>Loading...</h2>}</div>

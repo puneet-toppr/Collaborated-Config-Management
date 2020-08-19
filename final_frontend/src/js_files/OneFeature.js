@@ -105,7 +105,7 @@ class OneFeature extends Component{
 
     if (feature.domain_id_list.length===0){
         domain_list.push(
-          <div>No domains have '{feature.name}' associated to it.</div>)
+          <div>No domain has '{feature.name}' associated to it.</div>)
     }
     else{
       domain_list.push(<div><b>Domains having '{feature.name}' associated to them -></b><br></br><br></br></div>)

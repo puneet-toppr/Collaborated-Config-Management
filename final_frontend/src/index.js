@@ -48,10 +48,7 @@ function App(){
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>,document.getElementById('root'))
 
 
-//able to edit domain/feature name -> basic
-
-// styling
-
+// report bug button
 
 
 
