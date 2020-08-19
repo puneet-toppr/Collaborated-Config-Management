@@ -1,0 +1,108 @@
+import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+
+import Navbar from './Navbar.js'
+
+class AllDomains extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+        domains:[{name:'', id:''}],
+    }
+    this.alert_delete_domain = this.alert_delete_domain.bind(this)
+    }
+
+  alert_delete_domain(domain_id, domain_name){
+  let confirmation = window.confirm('Are you sure you want to delete domain \''+domain_name+'\' having id \''+domain_id+'\'?')
+    if (confirmation === true){
+      this.api_delete_confirm(domain_id, domain_name)
+    }
+  }
+  
+  api_delete_confirm(domain_id, domain_name){
+    const endpoint = 'http://127.0.0.1:8000/domain/'+domain_id+'/';
+    let thisComponent = this
+    let look_up_options = {
+         method: "DELETE",
+         headers: {
+             'content-type': 'application/json'
+      }
+      }
+      fetch(endpoint, look_up_options)
+      .then(function(response){
+         return response.json()
+      }).then(function(responseData){
+         console.log(responseData)
+              if (responseData['error_message']){
+             alert(responseData['error_message'])
+           }
+           else{
+             alert('Domain with name \''+domain_name+'\' and id \''+domain_id+'\' has been deleted.')
+             thisComponent.componentDidMount()
+           }
+      })
+
+  }
+
+  api_all_domains(){
+  	let thisComponent = this
+    const endpoint = 'http://127.0.0.1:8000/domain/';
+    let look_up_options = {
+         method: "GET"
+    }
+
+    fetch(endpoint, look_up_options)
+    .then(function(response){
+       return response.json()
+    }).then(function(responseData){
+      // console.log(responseData.domains_info)
+       thisComponent.setState({
+       	domains:responseData.domains_info
+       })
+    }).catch(function(error){
+       console.log("error", error)
+    })
+
+  }
+
+  componentDidMount(){
+      this.api_all_domains()
+  }
+  render(){
+  	const {domains} = this.state
+    
+    const domain_list = []
+
+    for (let domain of domains){
+      domain_list.push(
+
+        <div>
+        <h1> {domain.name}</h1>
+        <p> {domain.id}</p>
+            <div>
+          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
+          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
+          <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>
+      </div>
+            <hr></hr>  
+      </div>
+
+        )
+    }
+
+  	return(
+    <div className='container'>
+    <Navbar/>
+    <br></br><br></br><br></br>
+  	<div>this is listing all domains</div>
+    <button className='btn'><Link className='btn btn-primary' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+  	<hr></hr>
+        {domain_list}
+    </div>
+  	)
+  }
+}
+
+export default withRouter(AllDomains)
