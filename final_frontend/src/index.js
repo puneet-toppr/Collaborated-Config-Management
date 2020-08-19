@@ -16,7 +16,7 @@ import EditFeature from './js_files/EditFeature.js'
 
 function handle404(){
 	return (
-			<div>Error - 404!, Page not found</div>
+			<div><h1>Error - 404!, Page not found</h1>	</div>
 		)
 }
 
@@ -56,9 +56,11 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>,document.getElementById('
 
 
 
-// done 
-//one domain/feature -> edit, delete button
+// // done 
+// one domain/feature -> edit, delete button
 // component did moount not to be used -> api shud not be called again
-//return error for no domain/feature -> basic
-//cancel button on edit page -> basic
+// return error for no domain/feature -> basic
+// cancel button on edit page -> basic
 // display domain/feature name while calling get domain/feature api -> basic
+
+// able to edit domain/feature name -> basic

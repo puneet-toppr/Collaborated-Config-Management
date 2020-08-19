@@ -9,7 +9,7 @@ class OneFeature extends Component{
     super(props)
     this.state={
       id: null,
-      feature: null,
+      feature: {domain_id_list:[]},
       done_loading: false
     }
     // this.api_view_feature  = this.api_view_feature.bind(this)
@@ -18,7 +18,7 @@ class OneFeature extends Component{
   componentDidMount(){
     this.setState({
         id: null,
-        feature: null
+        feature: {domain_id_list:[]}
       })
     if (this.props.match){
       const {id} = this.props.match.params
@@ -73,13 +73,25 @@ class OneFeature extends Component{
       }
         fetch(view_endpoint, view_look_up_options)
         .then(function(response){
-           return response.json()
+          if(response.status === 404){
+            alert('PAGE NOT FOUND')
+            thisComponent.props.history.push('/domain');
+          }
+          else{
+            return response.json()
+          }
+          return response.json()
         }).then(function(responseData){
-           // console.log(responseData)
+           // console.log(responseData.status)
+           if (responseData['error_message']){
+             alert(responseData['error_message'])
+             thisComponent.props.history.push('/feature');
+           }
+           else{
            thisComponent.setState({
                done_loading: true,
                feature:responseData.feature_info
-           })
+           })}
         })
   }
 
@@ -96,10 +108,11 @@ class OneFeature extends Component{
           <div>No domains have '{feature.name}' associated to it.</div>)
     }
     else{
+      domain_list.push(<div><b>Domains having '{feature.name}' associated to them -></b><br></br><br></br></div>)
       for (let domain of (feature.domain_id_list)){
         domain_list.push(
           <div>
-            {domain.name}
+           {domain.name}
           </div>
         )
       }
@@ -110,7 +123,8 @@ class OneFeature extends Component{
               <div className='container'><Navbar/> {(done_loading === true) ? <div>
                   {(feature === null) ? 'Page Not Found' :
                   <div> 
-                  <div><br></br><br></br><br></br>feature name -> {feature.name} <hr></hr> feature id -> {feature.id} <hr></hr>{domain_list}<br></br></div>
+                  <div><br></br><br></br><br></br><b>Feature Name</b> -> {feature.name} <hr></hr> <b>Feature ID</b> -> {feature.id} <hr></hr>{domain_list}<br></br></div>
+                  <button className='btn'><Link className='btn btn-secondary' to={{pathname:`/feature`, state:{fromDashboard:false}}}>Back</Link></button>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Name</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
                   </div>

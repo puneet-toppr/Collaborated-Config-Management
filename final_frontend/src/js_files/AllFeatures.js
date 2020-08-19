@@ -85,6 +85,7 @@ class AllFeatures extends Component {
          <div className='container'>
           <Navbar/>
           <br></br><br></br><br></br>
+          <h1>All Features</h1>
           <button className='btn'><Link className='btn btn-primary' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
           <hr></hr>
           No Features available, create a new one!

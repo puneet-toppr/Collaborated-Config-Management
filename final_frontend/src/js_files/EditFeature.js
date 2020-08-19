@@ -52,13 +52,25 @@ class EditFeature extends Component {
       }
         fetch(view_endpoint, view_look_up_options)
         .then(function(response){
-           return response.json()
+          if(response.status === 404){
+            alert('PAGE NOT FOUND')
+            thisComponent.props.history.push('/domain');
+          }
+          else{
+            return response.json()
+          }
+          return response.json()
         }).then(function(responseData){
-           // console.log(responseData)
+           // console.log(responseData.status)
+           if (responseData['error_message']){
+             alert(responseData['error_message'])
+             thisComponent.props.history.push('/feature');
+           }
+           else{
            thisComponent.setState({
                done_loading_feature: true,
                feature_info:responseData.feature_info
-           })
+           })}
         })
   }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import Navbar from './Navbar.js'
 
@@ -125,6 +125,7 @@ class AddDomain extends Component {
         {feature_list}
            
         <button className='btn btn-primary'>Save</button>
+        <button className='btn'><Link className='btn btn-secondary' to={{pathname:'/domain', state:{fromDashboard:false}}}>Cancel</Link></button>
       </form>
       </div>
       )

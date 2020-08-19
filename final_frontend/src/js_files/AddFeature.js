@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import Navbar from './Navbar.js'
 
@@ -57,6 +57,7 @@ class AddFeature extends Component {
           <input type='text' id='feature_name' name='feature_name' className='form-control' placeholder='Enter Feature Name...' onChange={this.handleInputChange} required='required'/>
         </div>
         <button className='btn btn-primary'>Save</button>
+        <button className='btn'><Link className='btn btn-secondary' to={{pathname:'/feature', state:{fromDashboard:false}}}>Cancel</Link></button>
       </form>
       </div>
       )

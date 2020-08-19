@@ -73,13 +73,25 @@ class OneDomain extends Component{
       }
         fetch(view_endpoint, view_look_up_options)
         .then(function(response){
-           return response.json()
+          if(response.status === 404){
+            alert('PAGE NOT FOUND')
+            thisComponent.props.history.push('/domain');
+          }
+          else{
+            return response.json()
+          }
+          return response.json()
         }).then(function(responseData){
            // console.log(responseData)
+           if (responseData['error_message']){
+             alert(responseData['error_message'])
+             thisComponent.props.history.push('/domain');
+           }
+           else{
            thisComponent.setState({
                done_loading: true,
                domain:responseData.domain_info
-           })
+           })}
         })
   }
 
@@ -96,6 +108,7 @@ class OneDomain extends Component{
           <div>No features are associated to '{domain.name}'</div>)
     }
     else{
+      feature_list.push(<div><b>Features associated to '{domain.name}' -></b><br></br><br></br></div>)
       for (let feature of (domain.feature_id_list)){
         feature_list.push(
           <div>
@@ -110,7 +123,8 @@ class OneDomain extends Component{
               <div className='container'><Navbar/> {(done_loading === true) ? <div>
                   {(domain === null) ? 'Page Not Found' : 
                   <div>
-                  <div><br></br><br></br><br></br>domain name -> {domain.name} <hr></hr> domain id -> {domain.id} <hr></hr> {feature_list}<br></br></div>
+                  <div><br></br><br></br><br></br><b>Domain Name</b> -> {domain.name}<hr></hr> <b>Domain ID</b> -> {domain.id} <hr></hr> {feature_list}<br></br></div>
+                  <button className='btn'><Link className='btn btn-secondary' to={{pathname:`/domain`, state:{fromDashboard:false}}}>Back</Link></button>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>                  
                   </div>
