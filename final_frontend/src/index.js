@@ -12,6 +12,7 @@ import AddFeature from './js_files/AddFeature.js'
 import OneDomain from './js_files/OneDomain.js'
 import OneFeature from './js_files/OneFeature.js'
 import EditDomain from './js_files/EditDomain.js'
+import EditFeature from './js_files/EditFeature.js'
 
 function handle404(){
 	return (
@@ -36,6 +37,7 @@ function App(){
 			<Route exact path='/feature/:id' component={OneFeature}/>
 
 			<Route exact path='/domain/:id/edit' component={EditDomain}/>
+			<Route exact path='/feature/:id/edit' component={EditFeature}/>
 
 			<Route component={handle404}/>
 		</Switch>
@@ -44,3 +46,19 @@ function App(){
 }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>,document.getElementById('root'))
+
+
+//able to edit domain/feature name -> basic
+
+// styling
+
+
+
+
+
+// done 
+//one domain/feature -> edit, delete button
+// component did moount not to be used -> api shud not be called again
+//return error for no domain/feature -> basic
+//cancel button on edit page -> basic
+// display domain/feature name while calling get domain/feature api -> basic

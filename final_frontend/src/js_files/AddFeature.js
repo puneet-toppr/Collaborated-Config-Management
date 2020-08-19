@@ -41,7 +41,6 @@ class AddFeature extends Component {
   }
 
   handleInputChange(event){
-    console.log(event.target.name, event.target.value)
     this.setState({
       [event.target.name]:event.target.value
     })

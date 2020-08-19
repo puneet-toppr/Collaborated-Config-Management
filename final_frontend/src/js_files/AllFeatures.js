@@ -9,6 +9,7 @@ class AllFeatures extends Component {
     super(props)
     this.state = {
         features:[{name:'', id:''}],
+        done_loading_features:false
     }
     this.alert_delete_feature = this.alert_delete_feature.bind(this)
   }
@@ -39,7 +40,7 @@ class AllFeatures extends Component {
            }
            else{
              alert('Feature with name \''+feature_name+'\' and id \''+feature_id+'\' has been deleted.')
-             thisComponent.componentDidMount()
+             thisComponent.setState(prevState => ({features:prevState.features.filter(feature => feature.id!==feature_id)}))
            }
       })
 
@@ -56,10 +57,11 @@ class AllFeatures extends Component {
     .then(function(response){
        return response.json()
     }).then(function(responseData){
-       console.log(responseData)
-       console.log(responseData.features_info)
+       // console.log(responseData)
+       // console.log(responseData.features_info)
        thisComponent.setState({
-       	features:responseData.features_info
+       	features:responseData.features_info,
+        done_loading_features:true
        })
     }).catch(function(error){
        console.log("error", error)
@@ -72,17 +74,33 @@ class AllFeatures extends Component {
   }
   render(){
   	const {features} = this.state
+    const {done_loading_features} = this.state
     
-    const feature_list = []
 
+    if(done_loading_features===true){
+    const feature_list = []
+    if (features.length===0)
+    {
+      return (
+         <div className='container'>
+          <Navbar/>
+          <br></br><br></br><br></br>
+          <button className='btn'><Link className='btn btn-primary' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+          <hr></hr>
+          No Features available, create a new one!
+          
+          </div> 
+        )
+    }
+    else{
     for (let feature of features){
       feature_list.push(
 
         <div>
-        <h1> {feature.name}</h1>
-        <p> {feature.id}</p>
+        <h4> {feature.name}</h4>
             <div>
           <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}`, state:{fromDashboard:false}}}>View Feature</Link></button>
+          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Feature Name</Link></button>
           <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
       </div>
             <hr></hr>  
@@ -91,17 +109,22 @@ class AllFeatures extends Component {
         )
     }
 
-    return(
-    <div className='container'>
-    <Navbar/>
-    <br></br><br></br><br></br>
-    <p>this is listing all features</p>
-    <button className='btn'><Link className='btn btn-primary' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
-    <hr></hr>
-        {feature_list}
-    </div>
-    )
+      return(
+      <div className='container'>
+      <Navbar/>
+      <br></br><br></br><br></br>
+      <h1>All Features</h1>
+      <button className='btn'><Link className='btn btn-primary' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+      <hr></hr>
+          {feature_list}
+      </div>
+      )
+    }
   }
+  else{
+    return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
+  }
+}
 }
 
 export default withRouter(AllFeatures)

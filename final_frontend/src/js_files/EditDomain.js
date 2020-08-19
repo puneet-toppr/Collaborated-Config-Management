@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import Navbar from './Navbar.js'
 
@@ -9,6 +9,7 @@ class EditDomain extends Component {
     super(props)
     this.state = {
       domain_info:{name:'', id:'', feature_id_list:[]},
+      domain_name:'',
       features_info:[{name:'', id:''}],
       done_loading_domain: false,
       done_loading_feature: false
@@ -36,7 +37,7 @@ class EditDomain extends Component {
        }
        else{
          alert('Domain with name \''+responseData['domain_info']['name']+'\' has been updated and has id \''+responseData['domain_info']['id']+'\'')
-         thisComponent.props.history.push('/domain');
+         thisComponent.props.history.push(`/domain/${domain_info.id}`);
        }
     })
 
@@ -107,6 +108,7 @@ class EditDomain extends Component {
     const data = {}
     let feature_id_list = []
     const {domain_info} = this.state
+    const {domain_name} = this.state
   	const {features_info} = this.state
 
     for (let feature of features_info){
@@ -121,8 +123,13 @@ class EditDomain extends Component {
     }
 
     data['domain_id'] = domain_info.id
+    if (domain_name===''){
+      data['domain_name'] = domain_info.name
+    }
+    else{
+      data['domain_name'] = domain_name
+    }
     data['feature_id_list'] = feature_id_list
-
 
     this.api_edit_domain(data)
   }
@@ -142,8 +149,13 @@ class EditDomain extends Component {
   	const {features_info} = this.state
     const feature_list = []
 
+    const feature_id_list = []
+    for (let feature of domain_info.feature_id_list){
+      feature_id_list.push(feature.id)
+    }
+
     for (let feature of features_info){
-    	if ((domain_info.feature_id_list).includes(feature.id)){
+    	if ((feature_id_list).includes(feature.id)){
 	      	feature_list.push(
 	          <div className='form-group'>
 	            <label for={feature.id}>
@@ -176,12 +188,14 @@ class EditDomain extends Component {
 
         			<form className='my-5 mx-2' onSubmit={this.handleSubmit}>
 				        <div className='form-group'>
-				         Domain Name -> {domain_info.name}
+                <label for='domain_name'>Domain Name</label>
+                <input type='text' id='domain_name' name='domain_name' defaultValue={domain_info.name} className='form-control' placeholder='Enter Domain Name...' onChange={this.handleInputChange} required='required'/>
 				        </div>
 
 				        {feature_list}
 				           
 				        <button className='btn btn-primary'>Save</button>
+                <button className='btn'><Link className='btn btn-secondary' to={{pathname:'/domain', state:{fromDashboard:false}}}>Cancel</Link></button>
 				    </form>
                   }
                   </div> : <h2><br></br><br></br>Loading...</h2>}</div>
