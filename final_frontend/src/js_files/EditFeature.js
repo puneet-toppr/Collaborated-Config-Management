@@ -148,3 +148,4 @@ class EditFeature extends Component {
 
 
 export default withRouter(EditFeature)
+
