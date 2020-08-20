@@ -105,25 +105,31 @@ class OneDomain extends Component{
 
     if (domain.feature_id_list.length===0){
         feature_list.push(
-          <div>No features are associated to '{domain.name}'</div>)
+          <div><h4>No features are associated to '{domain.name}'</h4></div>)
     }
     else{
-      feature_list.push(<div><b>Features associated to '{domain.name}' -></b><br></br><br></br></div>)
+      feature_list.push(<div><b><h4>Features associated to '{domain.name}' -></h4></b><br></br></div>)
       for (let feature of (domain.feature_id_list)){
         feature_list.push(
-          <div>
+          <div><ul><li>
+            <h5>
             {feature.name}
-          </div>
+            </h5>
+          </li></ul></div>
         )
       }
     }
     }
 
     return (
-              <div className='container'><Navbar/> {(done_loading === true) ? <div>
+              <div className='container'><Navbar/><br></br><br></br><br></br>
+            <div className='centercreate'>
+              <h1>View Domain</h1>
+            </div>
+             {(done_loading === true) ? <div>
                   {(domain === null) ? 'Page Not Found' : 
                   <div>
-                  <div><br></br><br></br><br></br><b>Domain Name</b> -> {domain.name}<hr></hr> <b>Domain ID</b> -> {domain.id} <hr></hr> {feature_list}<br></br></div>
+                  <div><br></br><br></br><br></br><h4><b>Domain Name</b> -> {domain.name} </h4><hr></hr><h4> <b>Domain ID</b> -> {domain.id} </h4><hr></hr> {feature_list}<br></br></div>
                   <button className='btn btn-secondary'><Link to={{pathname:`/domain`, state:{fromDashboard:false}}}>Back</Link></button>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>                  

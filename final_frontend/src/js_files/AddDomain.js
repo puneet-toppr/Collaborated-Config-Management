@@ -101,6 +101,14 @@ class AddDomain extends Component {
 
     const feature_list = []
 
+    if (features.length !== 0){
+      feature_list.push(
+          <div>
+          <br></br>
+          <div className='form-group'><h4>Features available -> </h4></div></div>
+        )
+    }
+
     for (let feature of features){
       feature_list.push(
           <div className='form-group'>
@@ -116,10 +124,14 @@ class AddDomain extends Component {
     return(
       <div className='container'>
       <Navbar/>
+      <br></br><br></br><br></br>
+      <div className='centercreate'>
+        <h1>Create Domain</h1>
+      </div>
       <form className='my-5 mx-2' onSubmit={this.handleSubmit}>
         <div className='form-group'>
-          <label for='domain_name'>Domain Name</label>
-          <input type='text' id='domain_name' name='domain_name' className='form-control' placeholder='Enter Domain Name...' onChange={this.handleInputChange} required='required'/>
+            <label for='domain_name'><h4>Domain Name -> </h4></label>
+            <input type='text' id='domain_name' name='domain_name' className='form-control' placeholder='Enter Domain Name...' onChange={this.handleInputChange} required='required'/>
         </div>
 
         {feature_list}

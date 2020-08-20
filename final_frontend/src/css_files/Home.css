@@ -27,7 +27,6 @@ section:hover {
 }
 
 .serif {
-  font-family: Papyrus, fantasy;
-  /*font-family: "Brush Script MT", cursive;*/
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-size: 100px
 }

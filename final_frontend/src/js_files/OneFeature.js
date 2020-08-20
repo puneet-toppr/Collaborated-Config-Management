@@ -105,25 +105,31 @@ class OneFeature extends Component{
 
     if (feature.domain_id_list.length===0){
         domain_list.push(
-          <div>No domain has '{feature.name}' associated to it.</div>)
+          <div><h4>No domain has '{feature.name}' associated to it</h4></div>)
     }
     else{
-      domain_list.push(<div><b>Domains having '{feature.name}' associated to them -></b><br></br><br></br></div>)
+      domain_list.push(<div><b><h4>Domains having '{feature.name}' associated to them -></h4></b><br></br></div>)
       for (let domain of (feature.domain_id_list)){
         domain_list.push(
-          <div>
-           {domain.name}
-          </div>
+          <div><ul><li>
+            <h5>
+            {domain.name}
+            </h5>
+          </li></ul></div>
         )
       }
     }
     }
 
     return (
-              <div className='container'><Navbar/> {(done_loading === true) ? <div>
+              <div className='container'><Navbar/> <br></br><br></br><br></br>
+            <div className='centercreate'>
+              <h1>View Feature</h1>
+            </div>
+            {(done_loading === true) ? <div>
                   {(feature === null) ? 'Page Not Found' :
                   <div> 
-                  <div><br></br><br></br><br></br><b>Feature Name</b> -> {feature.name} <hr></hr> <b>Feature ID</b> -> {feature.id} <hr></hr>{domain_list}<br></br></div>
+                  <div><br></br><br></br><br></br><h4><b>Feature Name</b> -> {feature.name}</h4><hr></hr> <b>Feature ID</b> -> {feature.id} <hr></hr>{domain_list}<br></br></div>
                   <button className='btn btn-secondary'><Link to={{pathname:`/feature`, state:{fromDashboard:false}}}>Back</Link></button>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Name</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>

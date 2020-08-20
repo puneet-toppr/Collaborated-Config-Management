@@ -161,6 +161,14 @@ class EditDomain extends Component {
   	const {features_info} = this.state
     const feature_list = []
 
+    if (features_info.length !== 0){
+      feature_list.push(
+          <div>
+          <br></br>
+          <div className='form-group'><h4>Features available -> </h4></div></div>
+        )
+    }
+
     const feature_id_list = []
     for (let feature of domain_info.feature_id_list){
       feature_id_list.push(feature.id)
@@ -193,14 +201,18 @@ class EditDomain extends Component {
 
     return(
 
-      <div className='container'><Navbar/> {(done_loading_domain === true && done_loading_feature === true) ? 
+      <div className='container'><Navbar/><br></br><br></br><br></br>
+      <div className='centercreate'>
+        <h1>Edit Domain</h1>
+      </div> 
+      {(done_loading_domain === true && done_loading_feature === true) ? 
       	<div>
         {(domain_info === null) ? 'Page Not Found' : 
         
 
         			<form className='my-5 mx-2' onSubmit={this.handleSubmit}>
 				        <div className='form-group'>
-                <label for='domain_name'>Domain Name</label>
+                <label for='domain_name'><h4>Domain Name -></h4></label>
                 <input type='text' id='domain_name' name='domain_name' defaultValue={domain_info.name} className='form-control' placeholder='Enter Domain Name...' onChange={this.handleInputChange} required='required'/>
 				        </div>
 

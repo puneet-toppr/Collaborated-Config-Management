@@ -26,7 +26,7 @@ body {
      color: white;
      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
      font-weight: bold;
-     padding: 12px 140px;
+     padding: 12px 136px;
      margin: 0 15px;
      position: relative;
      cursor: pointer;
@@ -52,6 +52,22 @@ body {
      transform: scale(1.2);
 }
 
- .search input {
-      width: 390px;
+.search input {
+      width: 940px;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  /*border: 3px solid green;*/
+  padding: 10px 212px;
+}
+
+.centercreate {
+  margin :auto;
+  text-align: center;
+  width: 50%;
+  /*border: 3px solid green;*/
+  padding: 10px 120px;
 }

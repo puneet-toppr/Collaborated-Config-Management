@@ -51,9 +51,13 @@ class AddFeature extends Component {
     return(
       <div className='container'>
       <Navbar/>
+      <br></br><br></br><br></br>
+      <div className='centercreate'>
+        <h1>Create Feature</h1>
+      </div>
       <form className='my-5 mx-2' onSubmit={this.handleSubmit}>
         <div className='form-group'>
-          <label for='feature_name'>Feature Name</label>
+          <label for='feature_name'><h4>Feature Name -> </h4></label>
           <input type='text' id='feature_name' name='feature_name' className='form-control' placeholder='Enter Feature Name...' onChange={this.handleInputChange} required='required'/>
         </div>
         <button className='btn btn-primary'>Save</button>

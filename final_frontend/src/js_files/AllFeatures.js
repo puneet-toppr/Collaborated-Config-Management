@@ -95,19 +95,24 @@ class AllFeatures extends Component {
       const feature_list = []
       if (features.length===0){
         return (
-           <div className='container'>
+          <div className='container'>
             <Navbar/>
             <br></br><br></br><br></br>
-            <h1>All Features</h1>
-            <br></br>
-            <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
-            <hr></hr>
+            <div className='center'>
+              <h1>Features</h1>
+              <br></br><br></br>
+            </div>
+            <div class="input-group">
+              <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+              <hr></hr>
             <div className='search'>
               <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
             </div>
-            <hr></hr>
-            No Features available!
-            </div> 
+          </div>
+          <br></br>
+          <hr></hr>
+          No Features available!
+          </div> 
         )
       }
       else{
@@ -130,13 +135,18 @@ class AllFeatures extends Component {
       <div className='container'>
         <Navbar/>
         <br></br><br></br><br></br>
-        <h1>All Features</h1>
-        <br></br>
-        <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
-        <hr></hr>
-        <div className='search'>
-          <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        <div className='center'>
+          <h1>Features</h1>
+          <br></br><br></br>
         </div>
+        <div class="input-group">
+          <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+          <hr></hr>
+          <div className='search'>
+            <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+          </div>
+        </div>
+        <br></br>
         <hr></hr>
         {feature_list}
       </div>
