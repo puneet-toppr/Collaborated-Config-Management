@@ -201,7 +201,7 @@ class EditDomain extends Component {
 
     return(
 
-      <div className='container'><Navbar/><br></br><br></br><br></br>
+      <div className='container animate__animated animate__fadeIn'><Navbar/><br></br><br></br><br></br>
       <div className='centercreate'>
         <h1>Edit Domain</h1>
       </div> 

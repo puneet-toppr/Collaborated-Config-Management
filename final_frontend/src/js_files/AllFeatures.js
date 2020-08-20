@@ -132,7 +132,7 @@ class AllFeatures extends Component {
       }
 
       return(
-      <div className='container'>
+      <div className='container animate__animated animate__fadeIn'>
         <Navbar/>
         <br></br><br></br><br></br>
         <div className='center'>

@@ -122,7 +122,7 @@ class OneDomain extends Component{
     }
 
     return (
-              <div className='container'><Navbar/><br></br><br></br><br></br>
+              <div className='container animate__animated animate__fadeIn'><Navbar/><br></br><br></br><br></br>
             <div className='centercreate'>
               <h1>View Domain</h1>
             </div>

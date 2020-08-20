@@ -21,7 +21,7 @@ class Home extends Component {
 
   render(){
   	return (
-  		<div className="row no-gutters">
+  		<div className="row no-gutters animate__animated animate__fadeIn">
             
               <section className="col-md-6" onClick={this.clicked_domain} style={{cursor: 'pointer'}}>              
                 <div className="leftside d-flex justify-content-center align-items-center" style={{backgroundImage: "url(https://i.pinimg.com/originals/92/2b/8a/922b8afdbf2a8aa799377b155bd91874.jpg)"}}>
