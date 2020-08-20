@@ -103,7 +103,7 @@ class AllDomains extends Component {
               <br></br><br></br>
             </div>
             <div class="input-group">
-              <button className='btn btn-success'><Link to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+              <Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link>
               <hr></hr>
             <div className='search'>
               <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
@@ -121,7 +121,7 @@ class AllDomains extends Component {
             <div>
               <h4> {domain.name}</h4>
               <div>
-              <button className='btn btn-primary'><Link to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
+              <Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link>
               <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
               <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>
               </div>
@@ -140,7 +140,7 @@ class AllDomains extends Component {
           <br></br><br></br>
         </div>
         <div class="input-group">
-          <button className='btn btn-success'><Link to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+          <Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link>
           <hr></hr>
           <div className='search'>
             <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>

@@ -130,7 +130,7 @@ class OneFeature extends Component{
                   {(feature === null) ? 'Page Not Found' :
                   <div> 
                   <div><br></br><br></br><br></br><h4><b>Feature Name</b> -> {feature.name}</h4><hr></hr><h4> <b>Feature ID</b> -> {feature.id}</h4> <hr></hr>{domain_list}<br></br></div>
-                  <button className='btn btn-secondary'><Link to={{pathname:`/feature`, state:{fromDashboard:false}}}>Back</Link></button>
+                  <Link className='btn btn-secondary' to={{pathname:`/feature`, state:{fromDashboard:false}}}>Back</Link>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Name</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
                   </div>
