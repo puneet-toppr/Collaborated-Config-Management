@@ -154,7 +154,7 @@ class AllFeatures extends Component {
       
     }
     else{
-      return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
+      return (<div className='container animate__animated animate__fadeIn'><Navbar/><br></br><h2>Loading...</h2></div>)
     }
   }
 }

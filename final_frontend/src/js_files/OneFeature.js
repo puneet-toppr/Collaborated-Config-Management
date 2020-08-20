@@ -135,7 +135,7 @@ class OneFeature extends Component{
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
                   </div>
                   }
-                  </div> : <h2><br></br><br></br>Loading...</h2>}</div>
+                  </div> : <h2 className='animate__animated animate__fadeIn'><br></br><br></br>Loading...</h2>}</div>
             )
   }
 

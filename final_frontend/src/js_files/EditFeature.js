@@ -138,7 +138,7 @@ class EditFeature extends Component {
                 <button className='btn'><Link className='btn btn-secondary' to={{pathname:`/feature/${feature_info.id}`, state:{fromDashboard:false}}}>Cancel</Link></button>
               </form>
         }
-        </div> : <h2><br></br><br></br>Loading...</h2>}
+        </div> : <h2 className='animate__animated animate__fadeIn'><br></br><br></br>Loading...</h2>}
       </div>
 
 
