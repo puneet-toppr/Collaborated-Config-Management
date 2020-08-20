@@ -10,8 +10,11 @@ class AllDomains extends Component {
     super(props)
     this.state = {
         domains:[{name:'', id:''}],
-        done_loading_domains:false
+        done_loading_domains:false,
+        search_name : ''
     }
+    this.editSearchTerm = this.editSearchTerm.bind(this)
+    this.dynamicSearch = this.dynamicSearch.bind(this)
     this.alert_delete_domain = this.alert_delete_domain.bind(this)
     }
 
@@ -58,7 +61,6 @@ class AllDomains extends Component {
     .then(function(response){
        return response.json()
     }).then(function(responseData){
-      // console.log(responseData.domains_info)
        thisComponent.setState({
          domains:responseData.domains_info,
          done_loading_domains:true
@@ -70,62 +72,74 @@ class AllDomains extends Component {
   }
 
   componentDidMount(){
-      this.api_all_domains()
+    this.api_all_domains()
   }
+
+  editSearchTerm(event){
+    this.setState({
+      search_name:event.target.value
+    })
+  }
+
+  dynamicSearch(event){
+    return this.state.domains.filter(domain => domain.name.includes(this.state.search_name.toLowerCase()))
+  }
+
   render(){
-    const {domains} = this.state
+
+    const domains = this.dynamicSearch()
     const {done_loading_domains} = this.state
-    
 
     if(done_loading_domains===true){
-    const domain_list = []
-    if (domains.length===0)
-    {
-      return (
-         <div className='container'>
-          <Navbar/>
-          <br></br><br></br><br></br>
-          <h1>All Domains</h1>
-          <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
-          <hr></hr>
-          No Domains available, create a new one!
-          
-          </div> 
+      const domain_list = []
+      if (domains.length===0){
+        return (
+           <div className='container'>
+            <Navbar/>
+            <br></br><br></br><br></br>
+            <h1>All Domains</h1>
+            <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+            <hr></hr>
+            <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            <hr></hr>
+            No Domains available!
+            </div> 
         )
-    }
-    else{
-    for (let domain of domains){
-      domain_list.push(
-
-        <div>
-        <h4> {domain.name}</h4>
+      }
+      else{
+        for (let domain of domains){
+          domain_list.push(
             <div>
-          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
-          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
-          <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>
-      </div>
-            <hr></hr>  
-      </div>
-
-        )
-    }
+              <h4> {domain.name}</h4>
+              <div>
+              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
+              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
+              <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>
+              </div>
+              <hr></hr>  
+            </div>
+            )
+        }
+      }
 
       return(
       <div className='container'>
-      <Navbar/>
-      <br></br><br></br><br></br>
-      <h1>All Domains</h1>
-      <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
-      <hr></hr>
-          {domain_list}
+        <Navbar/>
+        <br></br><br></br><br></br>
+        <h1>All Domains</h1>
+        <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+        <hr></hr>
+        <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        <hr></hr>
+        {domain_list}
       </div>
       )
+      
+    }
+    else{
+      return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
     }
   }
-  else{
-    return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
-  }
-}
 }
 
 export default withRouter(AllDomains)

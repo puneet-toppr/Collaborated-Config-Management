@@ -9,8 +9,11 @@ class AllFeatures extends Component {
     super(props)
     this.state = {
         features:[{name:'', id:''}],
-        done_loading_features:false
+        done_loading_features:false,
+        search_name : ''
     }
+    this.editSearchTerm = this.editSearchTerm.bind(this)
+    this.dynamicSearch = this.dynamicSearch.bind(this)
     this.alert_delete_feature = this.alert_delete_feature.bind(this)
   }
 
@@ -72,60 +75,72 @@ class AllFeatures extends Component {
   componentDidMount(){
       this.api_all_features()
   }
+
+  editSearchTerm(event){
+    this.setState({
+      search_name:event.target.value
+    })
+  }
+
+  dynamicSearch(event){
+    return this.state.features.filter(feature => feature.name.includes(this.state.search_name.toLowerCase()))
+  }
+
   render(){
-  	const {features} = this.state
+
+    const features = this.dynamicSearch()
     const {done_loading_features} = this.state
-    
 
     if(done_loading_features===true){
-    const feature_list = []
-    if (features.length===0)
-    {
-      return (
-         <div className='container'>
-          <Navbar/>
-          <br></br><br></br><br></br>
-          <h1>All Features</h1>
-          <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
-          <hr></hr>
-          No Features available, create a new one!
-          
-          </div> 
+      const feature_list = []
+      if (features.length===0){
+        return (
+           <div className='container'>
+            <Navbar/>
+            <br></br><br></br><br></br>
+            <h1>All Features</h1>
+            <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+            <hr></hr>
+            <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            <hr></hr>
+            No Features available!
+            </div> 
         )
-    }
-    else{
-    for (let feature of features){
-      feature_list.push(
-
-        <div>
-        <h4> {feature.name}</h4>
+      }
+      else{
+        for (let feature of features){
+          feature_list.push(
             <div>
-          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}`, state:{fromDashboard:false}}}>View Feature</Link></button>
-          <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Feature Name</Link></button>
-          <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
-      </div>
-            <hr></hr>  
-      </div>
-
-        )
-    }
+              <h4> {feature.name}</h4>
+              <div>
+              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}`, state:{fromDashboard:false}}}>View Feature</Link></button>
+              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Feature</Link></button>
+              <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
+              </div>
+              <hr></hr>  
+            </div>
+            )
+        }
+      }
 
       return(
       <div className='container'>
-      <Navbar/>
-      <br></br><br></br><br></br>
-      <h1>All Features</h1>
-      <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
-      <hr></hr>
-          {feature_list}
+        <Navbar/>
+        <br></br><br></br><br></br>
+        <h1>All Features</h1>
+        <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+        <hr></hr>
+        <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        <hr></hr>
+        {feature_list}
       </div>
       )
+      
+    }
+    else{
+      return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
     }
   }
-  else{
-    return (<div className='container'><Navbar/><br></br><h2>Loading...</h2></div>)
-  }
-}
 }
 
 export default withRouter(AllFeatures)

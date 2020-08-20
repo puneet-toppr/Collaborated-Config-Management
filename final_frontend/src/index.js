@@ -61,3 +61,10 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>,document.getElementById('
 // display domain/feature name while calling get domain/feature api -> basic
 
 // able to edit domain/feature name -> basic
+
+
+// suggestions
+
+// search function for domain as well as feature - functionality
+// caching - optimise
+// pagination
