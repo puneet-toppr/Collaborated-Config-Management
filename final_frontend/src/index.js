@@ -16,7 +16,7 @@ import EditFeature from './js_files/EditFeature.js'
 
 function handle404(){
 	return (
-			<div><h1>Error - 404!, Page not found</h1>	</div>
+			<div className='animate__animated animate__fadeIn'><h1>Error - 404!, Page not found</h1>	</div>
 		)
 }
 
