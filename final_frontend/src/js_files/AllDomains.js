@@ -98,9 +98,12 @@ class AllDomains extends Component {
             <Navbar/>
             <br></br><br></br><br></br>
             <h1>All Domains</h1>
-            <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+            <br></br>
+            <button className='btn btn-success'><Link to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
             <hr></hr>
-            <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            <div className='search'>
+              <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            </div>
             <hr></hr>
             No Domains available!
             </div> 
@@ -112,7 +115,7 @@ class AllDomains extends Component {
             <div>
               <h4> {domain.name}</h4>
               <div>
-              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
+              <button className='btn btn-primary'><Link to={{pathname:`/domain/${domain.id}`, state:{fromDashboard:false}}}>View Domain</Link></button>
               <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
               <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>
               </div>
@@ -127,9 +130,12 @@ class AllDomains extends Component {
         <Navbar/>
         <br></br><br></br><br></br>
         <h1>All Domains</h1>
-        <button className='btn'><Link className='btn btn-success' to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
+        <br></br>
+        <button className='btn btn-success'><Link to={{pathname:'/domain/new', state:{fromDashboard:false}}}>Add a new domain</Link></button>
         <hr></hr>
-        <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        <div className='search'>
+          <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Domain Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        </div>
         <hr></hr>
         {domain_list}
       </div>

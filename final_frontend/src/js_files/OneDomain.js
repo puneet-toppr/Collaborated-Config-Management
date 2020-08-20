@@ -124,7 +124,7 @@ class OneDomain extends Component{
                   {(domain === null) ? 'Page Not Found' : 
                   <div>
                   <div><br></br><br></br><br></br><b>Domain Name</b> -> {domain.name}<hr></hr> <b>Domain ID</b> -> {domain.id} <hr></hr> {feature_list}<br></br></div>
-                  <button className='btn'><Link className='btn btn-secondary' to={{pathname:`/domain`, state:{fromDashboard:false}}}>Back</Link></button>
+                  <button className='btn btn-secondary'><Link to={{pathname:`/domain`, state:{fromDashboard:false}}}>Back</Link></button>
                   <button className='btn'><Link className='btn btn-primary' to={{pathname:`/domain/${domain.id}/edit`, state:{fromDashboard:false}}}>Edit Domain</Link></button>
                   <button className='btn btn-danger'  onClick={() => this.alert_delete_domain(domain.id, domain.name)}>Delete Domain</button>                  
                   </div>

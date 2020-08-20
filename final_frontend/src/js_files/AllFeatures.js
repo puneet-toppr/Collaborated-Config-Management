@@ -99,9 +99,12 @@ class AllFeatures extends Component {
             <Navbar/>
             <br></br><br></br><br></br>
             <h1>All Features</h1>
-            <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+            <br></br>
+            <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
             <hr></hr>
-            <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            <div className='search'>
+              <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+            </div>
             <hr></hr>
             No Features available!
             </div> 
@@ -113,7 +116,7 @@ class AllFeatures extends Component {
             <div>
               <h4> {feature.name}</h4>
               <div>
-              <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}`, state:{fromDashboard:false}}}>View Feature</Link></button>
+              <button className='btn btn-primary'><Link to={{pathname:`/feature/${feature.id}`, state:{fromDashboard:false}}}>View Feature</Link></button>
               <button className='btn'><Link className='btn btn-primary' to={{pathname:`/feature/${feature.id}/edit`, state:{fromDashboard:false}}}>Edit Feature</Link></button>
               <button className='btn btn-danger'  onClick={() => this.alert_delete_feature(feature.id, feature.name)}>Delete Feature</button>
               </div>
@@ -128,9 +131,12 @@ class AllFeatures extends Component {
         <Navbar/>
         <br></br><br></br><br></br>
         <h1>All Features</h1>
-        <button className='btn'><Link className='btn btn-success' to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
+        <br></br>
+        <button className='btn btn-success'><Link to={{pathname:'/feature/new', state:{fromDashboard:false}}}>Add a new feature</Link></button>
         <hr></hr>
-        <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        <div className='search'>
+          <input type='text' id='search_name' name='search_name' className='form-control' placeholder='Enter Feature Name to search for...' onChange={this.editSearchTerm} value={this.state.search_name}/>
+        </div>
         <hr></hr>
         {feature_list}
       </div>
